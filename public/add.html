@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Items</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">
+                <strong>Virtual Closet</strong>
+            </a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">Dashboard</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Add Items Section -->
+    <section class="container py-5">
+        <div class="card shadow-lg p-4 mb-5">
+            <h1 class="mb-4 text-center">Add Items</h1>
+            <form id="addItemForm" novalidate>
+                <div class="mb-3">
+                    <label for="itemName" class="form-label">Item Name</label>
+                    <input type="text" id="itemName" class="form-control" placeholder="Enter the item name" required>
+                    <div class="invalid-feedback">Please enter a valid item name.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="ageGroup" class="form-label">Age Group</label>
+                    <select id="ageGroup" class="form-control" required>
+                        <option value="" disabled selected>Select Age Group</option>
+                        <option value="0-1">0-1 years</option>
+                        <option value="1-2">1-2 years</option>
+                        <option value="2-3">2-3 years</option>
+                        <option value="3-4">3-4 years</option>
+                    </select>
+                    <div class="invalid-feedback">Please select an age group.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" id="location" class="form-control" placeholder="Enter the location" required>
+                    <div class="invalid-feedback">Please enter a location.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="itemImage" class="form-label">Upload Image</label>
+                    <input type="file" id="itemImage" class="form-control" accept="image/*" required>
+                    <div id="imagePreview" class="mt-3"></div>
+                    <div class="invalid-feedback">Please upload an image.</div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        document.getElementById("itemImage").addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            const imagePreview = document.getElementById("imagePreview");
+
+            if (file) {
+                if (!file.type.startsWith("image/")) {
+                    alert("Please upload a valid image file.");
+                    e.target.value = ""; // Clear the input
+                    imagePreview.innerHTML = "";
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imagePreview.innerHTML = `
+                        <img src="${event.target.result}" alt="Item Image" 
+                        style="max-height: 150px; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.innerHTML = "";
+            }
+        });
+
+        document.getElementById("addItemForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const itemName = document.getElementById("itemName").value.trim();
+            const ageGroup = document.getElementById("ageGroup").value;
+            const location = document.getElementById("location").value.trim();
+            const itemImage = document.getElementById("itemImage").files[0];
+
+            if (!itemName || !ageGroup || !location || !itemImage) {
+                alert("Please fill in all fields and upload an image.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                const newItem = {
+                    id: Date.now(),
+                    name: itemName,
+                    ageGroup,
+                    location,
+                    image: reader.result,
+                };
+
+                // Save the new item logic (to server or local storage)
+                console.log("New Item Added:", newItem);
+                alert("Item added successfully!");
+
+                // Reset form and preview
+                document.getElementById("addItemForm").reset();
+                document.getElementById("imagePreview").innerHTML = "";
+            };
+
+            reader.readAsDataURL(itemImage);
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Red Baby Onesie",
+        "image": "images/baby-onesie-red.jpg",
+        "ageGroup": "0-1 years",
+        "location": "New York",
+        "price": 10.99
+    },
+    {
+        "id": 2,
+        "name": "Blue Baby T-Shirt",
+        "image": "images/baby-tshirt-blue.jpg",
+        "ageGroup": "2-3 years",
+        "location": "Los Angeles",
+        "price": 8.99
+    },
+    {
+        "id": 3,
+        "name": "Pink Baby Pajama Set",
+        "image": "images/baby-pajamas-pink.jpg",
+        "ageGroup": "3-4 years",
+        "location": "Chicago",
+        "price": 15.99
+    }
+]

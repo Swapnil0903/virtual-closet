@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Swapnil",
+        "email": "swapnil@example.com",
+        "username": "swapnil",
+        "password": "abc"
+    },
+    {
+        "name": "Ashmita",
+        "email": "ashmita@example.com",
+        "username": "ashmita",
+        "password": "abc"
+    }
+]
