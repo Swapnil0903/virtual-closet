@@ -1,4 +1,18 @@
-// Handle Login Form Submission
+// Load Items Function
+const loadItems = async () => {
+    try {
+        const response = await fetch("/items.json"); // Ensure this path is correct for your project
+        const items = await response.json();
+        console.log("Loaded items:", items);
+        return items;
+    } catch (error) {
+        console.error("Error loading items:", error);
+        alert("Failed to load items. Please refresh the page.");
+        return [];
+    }
+};
+
+// Authentication: Login Form Submission
 document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log("Login form submitted!");
@@ -39,7 +53,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     }
 });
 
-// Handle Registration Form Submission
+// Authentication: Registration Form Submission
 document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     console.log("Register form submitted!");
@@ -71,19 +85,16 @@ document.getElementById("registerForm")?.addEventListener("submit", async (e) =>
     }
 });
 
-// Load Items Function
-const loadItems = async () => {
-    try {
-        const response = await fetch("/items.json"); // Ensure this path is correct for your project
-        const items = await response.json();
-        console.log("Loaded items:", items);
-        return items;
-    } catch (error) {
-        console.error("Error loading items:", error);
-        alert("Failed to load items. Please refresh the page.");
-        return [];
-    }
-};
+// Logout Functionality
+document.querySelector(".logout-btn")?.addEventListener("click", () => {
+    // Clear any user-related data (e.g., localStorage/sessionStorage)
+    localStorage.clear();
+
+    // Redirect to the login page without an alert popup
+    window.location.href = "/index.html";
+    console.log("User logged out successfully.");
+});
+
 
 // Cart Functionality (Persistent with localStorage)
 const getCart = () => JSON.parse(localStorage.getItem("cart")) || [];
